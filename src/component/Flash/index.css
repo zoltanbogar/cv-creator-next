@@ -1,0 +1,30 @@
+.alert {
+    position: fixed;
+    padding: 20px;
+    width: 100%;
+    max-width: 30%;
+    min-width: 20%;
+    min-height: 30px;
+    right: 0;
+    bottom: 0;
+    height: fit-content;
+    margin-bottom: 5vh;
+    margin-right: 5vw;
+    border-radius: 10px;
+    z-index: 10;
+}
+.alert p {
+    margin: 0;
+}
+.alert-error {
+    background: lightcoral;
+}
+.alert-success {
+    background: aquamarine;
+    box-shadow: rgba(127, 255, 212, 0.4) 5px 5px, rgba(127, 255, 212, 0.3) 10px 10px, rgba(127, 255, 212, 0.2) 15px 15px, rgba(127, 255, 212, 0.1) 20px 20px, rgba(127, 255, 212, 0.05) 25px 25px;
+}
+.close {
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;
+}

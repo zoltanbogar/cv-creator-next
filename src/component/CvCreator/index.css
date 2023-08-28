@@ -1,0 +1,175 @@
+section {
+    width: 210mm;
+    /*height: 297mm;*/
+    height: 100%;
+}
+
+.left,
+.right {
+    padding: 2rem 1.35rem;
+}
+
+.left {
+    background: #0287de;
+    width: calc(239.17 / 793.69 * 100%);
+    min-width: calc(239.17 / 793.69 * 100%);
+    max-width: calc(239.17 / 793.69 * 100%);
+    color: white;
+}
+
+.name {
+    font-weight: 700;
+    font-size: 1.85rem;
+    line-height: 2rem;
+    margin-bottom: .25rem;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    margin-bottom: .25rem;
+}
+
+.left h2 {
+    background: #036bb2;
+    margin-inline: -1.35rem;
+    padding-inline: 1.35rem;
+    padding-block: 0.15rem;
+    margin-block: 1.25rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.contact > div > div:nth-child(1) {
+    font-weight: 700;
+    text-transform: capitalize;
+    font-size: .85rem;
+}
+
+.contact > div > div:nth-child(2) {
+    font-weight: 300;
+    font-size: .8rem;
+}
+
+.language,
+.hard {
+    font-weight: 300;
+    font-size: .8rem;
+}
+
+.language__line-wrapper:not(:nth-of-type(1)) .language__title,
+.hard__line-wrapper:not(:nth-of-type(1)) .hard__title {
+    margin-top: 0.25rem;
+}
+
+.progress-bar__border {
+    margin-top: .35rem;
+    width: 100%;
+    background: #2d89c5;
+    box-shadow: 0 0 10px 1px #036bb2;
+}
+
+.progress-bar__fill {
+    height: .75rem;
+    background: white;
+}
+
+.soft {
+    font-weight: 300;
+    font-size: .8rem;
+    page-break-before: always;
+}
+
+.soft > div {
+    margin-bottom: 0.25rem;
+}
+
+.soft > div:last-of-type {
+    margin-bottom: 0;
+}
+
+.desc {
+    font-weight: 300;
+    font-size: .8rem;
+}
+
+.right-side-list h2 {
+    margin-top: 1.35rem;
+    color: #002e58;
+    font-weight: 700;
+    font-size: 1.3rem;
+    padding-block: .5rem;
+    padding-inline: 1.35rem;
+    margin-inline: -1.35rem;
+    border-top: 2px solid #d8d8d8;
+    border-bottom: 2px solid #d8d8d8;
+}
+
+.work-data {
+    margin-top: 1rem;
+}
+
+.job-title {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.job-company {
+    font-size: .8rem;
+    font-style: italic;
+}
+
+.dates {
+    font-size: .8rem;
+    flex: 0 1 5rem;
+}
+
+.jobs-data {
+    flex: 1;
+}
+
+.resp-label,
+.tools-label,
+.results-label {
+    font-weight: 700;
+    font-size: .8rem;
+}
+
+.resp-content,
+.tools-content,
+.results-content {
+    font-weight: 300;
+    font-size: .8rem;
+    white-space: pre-wrap;
+}
+
+.ref-wrapper {
+    page-break-before: always;
+    page-break-after: always;
+}
+
+.ref {
+    margin-top: 1rem;
+}
+
+.ref-title {
+    font-weight: 700;
+    font-size: .8rem;
+}
+
+.ref-description {
+    font-weight: 300;
+    font-size: .8rem;
+}
+
+.image {
+    margin-top: .5rem;
+}
+
+.image img {
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 4 / 5;
+    max-height: 300px;
+}
