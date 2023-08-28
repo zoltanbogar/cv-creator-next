@@ -1,7 +1,4 @@
 import formidable from "formidable";
-import fs from "fs";
-
-
 
 const post = async (req, res) => {
   const form = new formidable.IncomingForm();
