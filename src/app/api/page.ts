@@ -1,11 +1,7 @@
 import formidable from "formidable";
 import fs from "fs";
 
-export const config = {
-  api: {
-    bodyParser: false
-  }
-};
+
 
 const post = async (req, res) => {
   const form = new formidable.IncomingForm();
