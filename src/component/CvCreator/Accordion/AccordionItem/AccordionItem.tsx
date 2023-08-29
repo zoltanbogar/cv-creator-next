@@ -52,7 +52,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}) => {
     const storageRef = ref(storage);
     const fileRef = ref(storageRef, `images/bla`)
     uploadBytes(fileRef, file).then((res) => {
-      window.flash('Successful upload!', 'success')
+      //window.flash('Successful upload!', 'success')
 
       getDownloadURL(fileRef).then((url) => {
         setData('image', {['url']: url})
