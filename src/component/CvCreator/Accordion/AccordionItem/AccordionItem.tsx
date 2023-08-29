@@ -22,6 +22,10 @@ type AccordionItemComponentProps = {
   value: string | ReadonlyArray<string> | number | undefined | {[p: string]: {[p: string]: any}} | contact | reference[] | hard[] | school[] | work[] | soft[] | image,
 }
 
+function isContact(myValue: string | ReadonlyArray<string> | number | { [p: string]: { [p: string]: any } } | contact | reference[] | hard[] | school[] | work[] | soft[] | image | undefined): myValue is contact {
+  return true;
+}
+
 const AccordionItemComponent = ({type, title, value, keyword, setData}: AccordionItemComponentProps) => {
   const [languageLines, setLanguageLines] = useState([]);
   const [languageLineCount, setLanguageLineCount] = useState(0)
@@ -123,6 +127,11 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
           rows={10}
           className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}></textarea>
       case 'contact':
+        const currentValue: string | ReadonlyArray<string> | number | { [p: string]: { [p: string]: any } } | contact | reference[] | hard[] | school[] | work[] | soft[] | image | undefined = value;
+
+
+
+
         return (
           <div>
             <div className={"mt-4"}>
@@ -130,7 +139,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
               <input className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
                      type="text"
                      data-foo={"address"}
-                     value={value?.address}
+                     value={isContact(currentValue) ? currentValue?.address : ''}
                      onChange={handleContactInfoDataChange}/>
             </div>
             <div className={"mt-4"}>
@@ -138,7 +147,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
               <input className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
                      type="text"
               data-foo={"email"}
-                     value={value?.email}
+                     value={isContact(currentValue) ? currentValue?.email : ''}
               onChange={handleContactInfoDataChange}/>
             </div>
             <div className={"mt-4"}>
@@ -146,7 +155,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
               <input className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
                      type="text"
                      data-foo={"linkedin"}
-                     value={value?.linkedin}
+                     value={isContact(currentValue) ? currentValue?.linkedin : ''}
                      onChange={handleContactInfoDataChange}/>
             </div>
             <div className={"mt-4"}>
@@ -154,7 +163,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
               <input className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
                      type="text"
                      data-foo={"phone"}
-                     value={value?.phone}
+                     value={isContact(currentValue) ? currentValue?.phone : ''}
                      onChange={handleContactInfoDataChange}/>
             </div>
             <div className={"mt-4"}>
@@ -162,7 +171,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
               <input className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
                      type="text"
                      data-foo={"github"}
-                     value={value?.github}
+                     value={isContact(currentValue) ? currentValue?.github : ''}
                      onChange={handleContactInfoDataChange}/>
             </div>
           </div>

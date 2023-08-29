@@ -22,6 +22,9 @@ export type reference = {
 export type contact = {
   address: string,
   email: string,
+  phone?: string,
+  linkedin?: string,
+  github?: string,
 }
 
 export type school = {
