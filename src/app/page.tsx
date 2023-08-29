@@ -10,7 +10,7 @@ import {Flash} from '@/component/Flash/Flash';
 import Bus from "@/Utils/Bus";
 
 export default function Home() {
-  window.flash = (message, type="success") => Bus.emit('flash', ({message, type}));
+  //window.flash = (message, type="success") => Bus.emit('flash', ({message, type}));
   return (
     <AuthProvider>
       <Flash />
