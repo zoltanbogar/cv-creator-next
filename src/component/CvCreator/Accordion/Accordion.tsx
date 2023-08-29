@@ -7,7 +7,7 @@ type AccordionComponentProps = {
   setData:  (value: (((prevState: {}) => {}) | {})) => void
 }
 
-const AccordionComponent = ({data, setData}) => {
+const AccordionComponent = ({data, setData}:AccordionComponentProps) => {
 
   return (
     <Accordion className='w-full' allowMultiple>
