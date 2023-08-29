@@ -11,8 +11,12 @@ import ReactToPrint, { useReactToPrint } from 'react-to-print';
 import {useAuth} from "@/context/AuthContext";
 import CvView from "@/component/CvView/CvView";
 
+type CvCreatorProps = {
+  id: string;
+}
+
 // eslint-disable-next-line react/display-name
-const CvCreator = React.forwardRef(({id}: string) => {
+const CvCreator = React.forwardRef(({id}:CvCreatorProps) => {
   const [cvdata, setCvdata] = useState({});
   const [shouldSave, setShouldSave] = useState(false);
 
