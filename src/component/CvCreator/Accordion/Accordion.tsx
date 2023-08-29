@@ -2,12 +2,73 @@ import React from 'react'
 import AccordionItemComponent from './AccordionItem/AccordionItem';
 import {Accordion} from "@chakra-ui/react";
 
+type language = {
+  value: string,
+  label: string,
+};
+
+type hard = {
+  value: string,
+  label: string,
+};
+
+type soft = {
+  label: string,
+};
+
+type ref = {
+  description: string,
+  title: string,
+}
+
+type school = {
+  "from-month": string,
+  "from-year": string,
+  school: string,
+  title: string,
+  "to-month": string,
+  "to-year": string,
+}
+
+type work = {
+  "from-month": string,
+  "from-year": string,
+  "to-month": string,
+  "to-year": string,
+  tools: string,
+  title: string,
+  results: string,
+  responsibilities: string,
+  company: string,
+  current?: boolean,
+  margin?: number,
+}
+
 type AccordionComponentProps = {
-  data: object,
+  data: {
+    name: string,
+    title: string,
+    image: {
+      url: string
+    },
+    description: string,
+    contact: {
+      address: string,
+      email: string,
+    },
+    languages: language[],
+    hard: hard[],
+    soft: soft[],
+    ref: ref[],
+    school: ref[],
+    work: work[],
+  },
   setData:  (value: (((prevState: {}) => {}) | {})) => void
 }
 
 const AccordionComponent = ({data, setData}:AccordionComponentProps) => {
+
+  console.log({data})
 
   return (
     <Accordion className='w-full' allowMultiple>
