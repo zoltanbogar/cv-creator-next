@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import {contact, hard, image, language, reference, school, soft, work} from "@/types/CvTypes";
 
 function isLanguage(myValue: string | ReadonlyArray<string> | number | { [p: string]: { [p: string]: any } } | contact | reference[] | hard[] | school[] | work[] | soft[] | image | undefined): myValue is language[] {
@@ -12,11 +12,11 @@ function isLang(myValue: language | undefined): myValue is language {
 type LanguageFieldProps = {
   keyword: string,
   idx: number,
-  handleLanguageDataChange: () => void,
+  handleLanguageDataChange: (event: ChangeEvent<HTMLInputElement>) => void,
   value: string | ReadonlyArray<string> | number | { [p: string]: { [p: string]: any } } | contact | reference[] | hard[] | school[] | work[] | soft[] | image | undefined,
 }
 
-const LanguageField = ({keyword, handleLanguageDataChange, value, idx}) => {
+const LanguageField = ({keyword, handleLanguageDataChange, value, idx}:LanguageFieldProps) => {
   const res = (isLanguage(value) && idx in value && isLang(value[idx])) ?
     (
       <div className={`multibar-line mt-4 multibar-${keyword} ${value?.[idx]?.label ? "" : "hidden"}`} data-child-eq={idx} key={idx}>

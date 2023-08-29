@@ -181,7 +181,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
         const idxArray = Array.from({length: 5}, (_, i) => i + 1);
         return (
           <div className={"multibar-wrapper"}>
-            {idxArray.map(idx => <LanguageField idx={idx} key={idx} handleLanguageDataChange={handleLanguageDataChange} value={value} />)}
+            {idxArray.map(idx => <LanguageField idx={idx} key={idx} handleLanguageDataChange={handleLanguageDataChange} value={value} keyword={keyword}/>)}
 
             <div className={`multibar-line mt-4 multibar-${keyword} ${value?.[6]?.label ? "" : "hidden"}`} data-child-eq={6} key={6}>
               <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
