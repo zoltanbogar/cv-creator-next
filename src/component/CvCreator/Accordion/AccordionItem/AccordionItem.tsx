@@ -12,14 +12,14 @@ import {storage} from "../../../../../firebase";
 
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import {string, number} from "prop-types";
+import { image, language, hard, soft, reference, work, school, contact } from "@/types/CvTypes";
 
 type AccordionItemComponentProps = {
   type: string,
   title: string,
   keyword: string,
   setData:  (value: ((prevState: {}) => {}) | {}, p: { url: string }) => void,
-  value: string | ReadonlyArray<string> | number | undefined | {[p: string]: {[p: string]: any}},
+  value: string | ReadonlyArray<string> | number | undefined | {[p: string]: {[p: string]: any}} | contact | reference[] | hard[] | school[] | work[] | soft[] | image,
 }
 
 const AccordionItemComponent = ({type, title, value, keyword, setData}: AccordionItemComponentProps) => {
