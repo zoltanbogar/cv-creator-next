@@ -84,7 +84,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
     })
   }
 
-  const renderSwitch = type => {
+  const renderSwitch = (type: string) => {
     switch (type) {
       case '1-input':
         return <input
