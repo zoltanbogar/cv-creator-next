@@ -12,7 +12,7 @@ import {useAuth} from "@/context/AuthContext";
 import CvView from "@/component/CvView/CvView";
 
 // eslint-disable-next-line react/display-name
-const CvCreator = React.forwardRef(({id}, ref) => {
+const CvCreator = React.forwardRef(({id}: number) => {
   const [cvdata, setCvdata] = useState({});
   const [shouldSave, setShouldSave] = useState(false);
 
