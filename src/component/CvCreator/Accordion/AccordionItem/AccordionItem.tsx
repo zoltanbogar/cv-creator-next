@@ -12,8 +12,17 @@ import {storage} from "../../../../../firebase";
 
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
+import {string, number} from "prop-types";
 
-const AccordionItemComponent = ({type, title, value, keyword, setData}) => {
+type AccordionItemComponentProps = {
+  type: string,
+  title: string,
+  keyword: string,
+  setData:  (value: ((prevState: {}) => {}) | {}, p: { url: string }) => void,
+  value: string | ReadonlyArray<string> | number | undefined | {[p: string]: {[p: string]: any}},
+}
+
+const AccordionItemComponent = ({type, title, value, keyword, setData}: AccordionItemComponentProps) => {
   const [languageLines, setLanguageLines] = useState([]);
   const [languageLineCount, setLanguageLineCount] = useState(0)
   const [avatarUrl, setNewAvatarUrl] = useState('');
@@ -54,7 +63,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}) => {
     uploadBytes(fileRef, file).then((res) => {
       //window.flash('Successful upload!', 'success')
 
-      getDownloadURL(fileRef).then((url) => {
+      getDownloadURL(fileRef).then((url: string) => {
         setData('image', {['url']: url})
       })
         .catch((error) => {
@@ -90,7 +99,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}) => {
         return <input
           className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
           type={"text"}
-          value={value}
+          value={typeof value === 'string' || typeof value === 'number' ? value : ''}
           onChange={handleInputChange}
         />;
       case 'image':
@@ -119,7 +128,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}) => {
       case 'textarea':
         return <textarea
           onChange={handleInputChange}
-          value={value}
+          value={typeof value === 'string' || typeof value === 'number' ? value : ''}
           rows={10}
           className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}></textarea>
       case 'contact':
@@ -358,7 +367,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}) => {
     console.log({newValue, keyword})
 
     value = newValue
-    setData(keyword, newValue)
+    setData(keyword, {["url"]: url})
   }
 
   const addNewWorkItem = () => {
@@ -398,7 +407,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}) => {
     const newValue = {...value, [order]: {[foo]: event.target.value}}
     value = newValue
     //console.log(foo, order, newValue)
-    setData(keyword, newValue)
+    setData(keyword, {["url"]: url})
   }
 
   const handleContactInfoDataChange = (event) => {
@@ -407,7 +416,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}) => {
 
     const newValue = {...value, [foo]: event.target.value}
     //console.log(newValue)
-    setData(keyword, newValue)
+    setData(keyword, {["url"]: url})
     value = newValue
   }
 
@@ -430,7 +439,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}) => {
     //const newValue = {...value, [foo]: event.target.value}
     //console.log({newValue, keyword})
     value = newValue
-    setData(keyword, newValue)
+    setData(keyword, {["url"]: url})
   }
 
   /*const createNewMultibarLine = (eq) => {
@@ -478,7 +487,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}) => {
   const handleInputChange = (event) => {
     const targetValue = event.target.value;
     //console.log(targetValue)
-    setData(keyword, targetValue)
+    setData(keyword, {["url"]: url})
     value = targetValue
   }
 
