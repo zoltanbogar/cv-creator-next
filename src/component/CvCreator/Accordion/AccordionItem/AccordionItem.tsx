@@ -13,6 +13,7 @@ import {storage} from "../../../../../firebase";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { image, language, hard, soft, reference, work, school, contact } from "@/types/CvTypes";
+import LanguageField from "@/component/CvCreator/LanguageFields/LanguageField";
 
 type AccordionItemComponentProps = {
   type: string,
@@ -177,33 +178,11 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
           </div>
         )
       case 'multi-bar':
+        const idxArray = Array.from({length: 5}, (_, i) => i + 1);
         return (
           <div className={"multibar-wrapper"}>
-            <div className={`multibar-line mt-4 multibar-${keyword}`} data-child-eq={1} key={1}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleLanguageDataChange} value={value?.[1]?.label} />
-              <input value={value?.[1]?.value} type="range" onChange={handleLanguageDataChange} min={1} max={5} data-foo={"value"} className={"w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"} />
-            </div>
-            <div className={`multibar-line mt-4 multibar-${keyword} ${value?.[2]?.label ? "" : "hidden"}`} data-child-eq={2} key={2}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleLanguageDataChange} value={value?.[2]?.label} />
-              <input value={value?.[2]?.value} type="range" onChange={handleLanguageDataChange} min={1} max={5} data-foo={"value"} className={"w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"} />
-            </div>
-            <div className={`multibar-line mt-4 multibar-${keyword} ${value?.[3]?.label ? "" : "hidden"}`} data-child-eq={3} key={3}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleLanguageDataChange} value={value?.[3]?.label} />
-              <input value={value?.[3]?.value} type="range" onChange={handleLanguageDataChange} min={1} max={5} data-foo={"value"} className={"w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"} />
-            </div>
-            <div className={`multibar-line mt-4 multibar-${keyword} ${value?.[4]?.label ? "" : "hidden"}`} data-child-eq={4} key={4}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleLanguageDataChange} value={value?.[4]?.label} />
-              <input value={value?.[4]?.value} type="range" onChange={handleLanguageDataChange} min={1} max={5} data-foo={"value"} className={"w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"} />
-            </div>
-            <div className={`multibar-line mt-4 multibar-${keyword} ${value?.[5]?.label ? "" : "hidden"}`} data-child-eq={5} key={5}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleLanguageDataChange} value={value?.[5]?.label} />
-              <input value={value?.[5]?.value} type="range" onChange={handleLanguageDataChange} min={1} max={5} data-foo={"value"} className={"w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"} />
-            </div>
+            {idxArray.map(idx => <LanguageField idx={idx} key={idx} handleLanguageDataChange={handleLanguageDataChange} value={value} />)}
+
             <div className={`multibar-line mt-4 multibar-${keyword} ${value?.[6]?.label ? "" : "hidden"}`} data-child-eq={6} key={6}>
               <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
                      data-foo={"label"} onChange={handleLanguageDataChange} value={value?.[6]?.label} />
