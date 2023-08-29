@@ -2,6 +2,11 @@ import React from 'react'
 import AccordionItemComponent from './AccordionItem/AccordionItem';
 import {Accordion} from "@chakra-ui/react";
 
+type AccordionComponentProps = {
+  data: object,
+  setData:  (value: (((prevState: {}) => {}) | {})) => void
+}
+
 const AccordionComponent = ({data, setData}) => {
 
   return (
