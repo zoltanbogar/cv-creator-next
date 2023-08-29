@@ -51,13 +51,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
     }
   };
 
-  const handleFile = async (file) => {
-    /*if (!e.target.files || e.target.files.length === 0) {
-      setPost({...post, imageSrc: undefined})
-      return
-    }*/
-
-    ///////// new
+  const handleFile = async (file: Blob | Uint8Array | ArrayBuffer) => {
     const storageRef = ref(storage);
     const fileRef = ref(storageRef, `images/bla`)
     uploadBytes(fileRef, file).then((res) => {
@@ -88,9 +82,6 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
           }
         });
     })
-    // setPost({...post, imageSrc: fileRef})
-    //setPost({...post, imageSrc: e.target.files[0], imageRef: fileRef})
-    //console.log(post.imageSrc)
   }
 
   const renderSwitch = type => {
