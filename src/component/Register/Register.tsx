@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {useAuth} from "@/context/AuthContext";
 
 const Register = () => {
@@ -8,12 +8,12 @@ const Register = () => {
 
   //console.log(currentUser)
 
-  const handleEmailChange = (event) => {
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     //console.log(event.target.value)
     setEmail(event.target.value)
   }
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     //console.log(event.target.value)
     setPassword(event.target.value)
   }

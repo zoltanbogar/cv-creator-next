@@ -145,7 +145,7 @@ section {
 }
 
 .ref-wrapper {
-    page-break-before: always;
+    /*page-break-before: always;*/
     page-break-after: always;
 }
 
@@ -322,7 +322,7 @@ section.cv-mini {
 }
 
 .ref-wrapper {
-    page-break-before: always;
+    /*page-break-before: always;*/
     page-break-after: always;
 }
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import {AccordionButton, AccordionIcon, AccordionItem, AccordionPanel} from "@chakra-ui/react";
 
-const WorkFields = ({hidden, change, number, value}) => {
+//@ts-ignore
+const WorkFields = ({change, number, value}) => {
   const year = (new Date()).getFullYear();
   const years = Array.from(new Array(30),( val, index) => year - index);
 
@@ -11,9 +12,8 @@ const WorkFields = ({hidden, change, number, value}) => {
         <AccordionButton className="flex justify-between">
       <span
         className="text-left font-bold text-navy-900 dark:text-white"
-        flex="1"
-        textAlign="left"
       >
+        {/*@ts-ignore*/}
         {value?.[number]?.title} - {value?.[number]?.company}
       </span>
           <AccordionIcon className="text-left !text-navy-900 dark:!text-white"/>
@@ -23,13 +23,15 @@ const WorkFields = ({hidden, change, number, value}) => {
         className="text-medium mt-2 text-left !text-navy-900 dark:!text-white"
         pb={4}
       >
-        <div className={`work-wrapper ${hidden ? 'hidden' : ''}`} data-child-eq={number} key={number}>
+        {/*@ts-ignore*/}
+        <div className={`work-wrapper ${value?.[number]?.title ? '' : 'hidden'}`} data-child-eq={number} key={number}>
 
 
 
           <div className="item-wrapper">
             <label htmlFor="default-range" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Margin Top</label>
+            {/*@ts-ignore*/}
             <input id="default-range" type="range" defaultValue={value?.[number]?.margin}
                    data-foo={"margin"} onChange={change} step={16} max={320} min={0}
                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" />
@@ -62,6 +64,7 @@ const WorkFields = ({hidden, change, number, value}) => {
           <div className="item-wrapper">
             <label htmlFor="" className={"block mb-2 text-sm font-medium text-gray-900 dark:text-white"}>To</label>
             <select data-foo={"to-year"} onChange={change} className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${value?.[number]?.['current'] ? "hidden" : ""}`}>
+              {/*@ts-ignore*/}
               <option {...!value?.[number]?.['to-year'] ? 'selected' : ''}>Pick a year</option>
               {
                 years.map((year, index) => {
@@ -86,7 +89,9 @@ const WorkFields = ({hidden, change, number, value}) => {
             </select>
             <input type="checkbox" onChange={change} checked={value?.[number]?.['current']} onClick={(event) => {
               //console.log(event.target.checked)
+              {/*@ts-ignore*/}
               const parent = event.target.parentNode;
+              {/*@ts-ignore*/}
               if (event.target.checked) {
                 parent.querySelector('[data-foo="to-month"]').classList.add('hidden')
                 parent.querySelector('[data-foo="to-year"]').classList.add('hidden')
@@ -110,14 +115,17 @@ const WorkFields = ({hidden, change, number, value}) => {
           </div>
           <div className="item-wrapper">
             <label htmlFor="" className={"block mb-2 text-sm font-medium text-gray-900 dark:text-white"}>Responsibilities</label>
+            {/*@ts-ignore*/}
             <textarea value={value?.[number]?.responsibilities} data-foo={"responsibilities"} onChange={change} className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"} rows="10"></textarea>
           </div>
           <div className="item-wrapper">
             <label htmlFor="" className={"block mb-2 text-sm font-medium text-gray-900 dark:text-white"}>Results</label>
+            {/*@ts-ignore*/}
             <textarea value={value?.[number]?.results} data-foo={"results"} onChange={change} className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"} rows="10"></textarea>
           </div>
           <div className="item-wrapper">
             <label htmlFor="" className={"block mb-2 text-sm font-medium text-gray-900 dark:text-white"}>Tools</label>
+            {/*@ts-ignore*/}
             <textarea value={value?.[number]?.tools} data-foo={"tools"} onChange={change} className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"} rows="10"></textarea>
           </div>
         </div>

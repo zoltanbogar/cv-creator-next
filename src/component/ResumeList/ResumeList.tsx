@@ -44,7 +44,7 @@ const ResumeList = () => {
   return (
     <div className="resume-list">
       {cvdata && Object.keys(cvdata).map(id => {
-        console.log(cvdata[id])
+        //@ts-ignore
         return <CvView cvdata={cvdata[id]} key={id} isMiniature={true} id={id} />
       })}
     </div>

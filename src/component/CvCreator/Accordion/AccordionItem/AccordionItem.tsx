@@ -1,25 +1,26 @@
-import React, {ChangeEvent, useEffect, useState} from 'react'
+import React, {ChangeEvent, MouseEventHandler, useEffect, useState} from 'react'
 import {Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel} from "@chakra-ui/react";
 import WorkFields from "@/component/CvCreator/WorkFields/WorkFields";
 import SchoolFields from "@/component/CvCreator/SchoolFields/SchoolFields";
 import RefFields from "@/component/CvCreator/RefFields/RefFields";
 
-import allowCors from "../../../../Utils/Cors";
-
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 
 import {storage} from "../../../../../firebase";
 
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import { image, language, hard, soft, reference, work, school, contact } from "@/types/CvTypes";
+import {contact, hard, image, reference, school, soft, work} from "@/types/CvTypes";
 import LanguageField from "@/component/CvCreator/LanguageFields/LanguageField";
+import SkillField from "@/component/CvCreator/SkillFields/SkillField";
+import {max} from "@popperjs/core/lib/utils/math";
 
 type AccordionItemComponentProps = {
   type: string,
   title: string,
   keyword: string,
-  setData:  (value: ((prevState: {}) => {}) | {}, p: { url: string }) => void,
+  //@ts-ignore
+  setData:  any,//(value: ((prevState: {}) => {}) | {}, p: { url: string }) => void,
   value: string | ReadonlyArray<string> | number | undefined | {[p: string]: {[p: string]: any}} | contact | reference[] | hard[] | school[] | work[] | soft[] | image,
 }
 
@@ -178,127 +179,55 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
           </div>
         )
       case 'multi-bar':
-        const idxArray = Array.from({length: 5}, (_, i) => i + 1);
+        const idxArray = Array.from({length: 10}, (_, i) => i + 1);
         return (
           <div className={"multibar-wrapper"}>
             {idxArray.map(idx => <LanguageField idx={idx} key={idx} handleLanguageDataChange={handleLanguageDataChange} value={value} keyword={keyword}/>)}
 
-            <div className={`multibar-line mt-4 multibar-${keyword} ${value?.[6]?.label ? "" : "hidden"}`} data-child-eq={6} key={6}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleLanguageDataChange} value={value?.[6]?.label} />
-              <input defaultValue={3} type="range" onChange={handleLanguageDataChange} min={1} max={5} data-foo={"value"} className={"w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"} />
-            </div>
-            <div className={`multibar-line mt-4 multibar-${keyword} ${value?.[7]?.label ? "" : "hidden"}`} data-child-eq={7} key={7}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleLanguageDataChange} value={value?.[7]?.label} />
-              <input defaultValue={3} type="range" onChange={handleLanguageDataChange} min={1} max={5} data-foo={"value"} className={"w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"} />
-            </div>
-            <div className={`multibar-line mt-4 multibar-${keyword} ${value?.[8]?.label ? "" : "hidden"}`} data-child-eq={8} key={8}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleLanguageDataChange} value={value?.[8]?.label} />
-              <input defaultValue={3} type="range" onChange={handleLanguageDataChange} min={1} max={5} data-foo={"value"} className={"w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"} />
-            </div>
-            <div className={`multibar-line mt-4 multibar-${keyword} ${value?.[9]?.label ? "" : "hidden"}`} data-child-eq={9} key={9}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleLanguageDataChange} value={value?.[9]?.label} />
-              <input defaultValue={3} type="range" onChange={handleLanguageDataChange} min={1} max={5} data-foo={"value"} className={"w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"} />
-            </div>
-            <div className={`multibar-line mt-4 multibar-${keyword} ${value?.[10]?.label ? "" : "hidden"}`} data-child-eq={10} key={10}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleLanguageDataChange} value={value?.[10]?.label} />
-              <input defaultValue={3} type="range" onChange={handleLanguageDataChange} min={1} max={5} data-foo={"value"} className={"w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"} />
-            </div>
-            <div className={`multibar-line mt-4 multibar-${keyword} ${value?.[11]?.label ? "" : "hidden"}`} data-child-eq={11} key={11}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleLanguageDataChange} value={value?.[11]?.label} />
-              <input defaultValue={3} type="range" onChange={handleLanguageDataChange} min={1} max={5} data-foo={"value"} className={"w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"} />
-            </div>
-
-            <button onClick={addNewMultibarLine}>+</button>
+            {/*<button onClick={event => addNewMultibarLine(event)}>+</button>*/}
           </div>
         );
       case 'multi-item':
+        const idxArr = Array.from({length: 11}, (_, i) => i + 1);
         return (
           <div className={"multiitem-wrapper"}>
-            <div className={`multi-item mt-4 multiitem-${keyword}`} data-child-eq={1} key={1}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleSkillInfoChange} value={value?.[1]?.label} />
-            </div>
-            <div className={`multi-item mt-4 multiitem-${keyword} ${value?.[2]?.label ? "" : "hidden"}`} data-child-eq={2} key={2}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleSkillInfoChange} value={value?.[2]?.label} />
-            </div>
-            <div className={`multi-item mt-4 multiitem-${keyword} ${value?.[3]?.label ? "" : "hidden"}`} data-child-eq={3} key={3}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleSkillInfoChange} value={value?.[3]?.label} />
-            </div>
-            <div className={`multi-item mt-4 multiitem-${keyword} ${value?.[4]?.label ? "" : "hidden"}`} data-child-eq={4} key={4}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleSkillInfoChange} value={value?.[4]?.label} />
-            </div>
-            <div className={`multi-item mt-4 multiitem-${keyword} ${value?.[5]?.label ? "" : "hidden"}`} data-child-eq={5} key={5}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleSkillInfoChange} value={value?.[5]?.label} />
-            </div>
-            <div className={`multi-item mt-4 multiitem-${keyword} ${value?.[6]?.label ? "" : "hidden"}`} data-child-eq={6} key={6}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleSkillInfoChange} value={value?.[6]?.label} />
-            </div>
-            <div className={`multi-item mt-4 multiitem-${keyword} ${value?.[7]?.label ? "" : "hidden"}`} data-child-eq={7} key={7}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleSkillInfoChange} value={value?.[7]?.label} />
-            </div>
-            <div className={`multi-item mt-4 multiitem-${keyword} ${value?.[8]?.label ? "" : "hidden"}`} data-child-eq={8} key={8}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleSkillInfoChange} value={value?.[8]?.label} />
-            </div>
-            <div className={`multi-item mt-4 multiitem-${keyword} ${value?.[9]?.label ? "" : "hidden"}`} data-child-eq={9} key={9}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleSkillInfoChange} value={value?.[9]?.label} />
-            </div>
-            <div className={`multi-item mt-4 multiitem-${keyword} ${value?.[10]?.label ? "" : "hidden"}`} data-child-eq={10} key={10}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleSkillInfoChange} value={value?.[10]?.label} />
-            </div>
-            <div className={`multi-item mt-4 multiitem-${keyword} ${value?.[11]?.label ? "" : "hidden"}`} data-child-eq={11} key={11}>
-              <input type="text" className={"bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}
-                     data-foo={"label"} onChange={handleSkillInfoChange} value={value?.[11]?.label} />
-            </div>
+            {idxArr.map(idx => <SkillField idx={idx} key={idx} handleSkillInfoChange={handleSkillInfoChange} value={value} keyword={keyword}/>)}
 
-            <button onClick={addNewMultiItemLine}>+</button>
+            {/*<button onClick={event => addNewMultiItemLine(event)}>+</button>*/}
           </div>
         );
       case 'work':
         return (
           <Accordion className='w-full' allowMultiple>
             <WorkFields change={handleWorkDataChange} number={1} value={value} />
-            <WorkFields change={handleWorkDataChange} number={2} value={value} hidden={!value?.[2]?.title} />
-            <WorkFields change={handleWorkDataChange} number={3} value={value} hidden={!value?.[3]?.title} />
-            <WorkFields change={handleWorkDataChange} number={4} value={value} hidden={!value?.[4]?.title} />
-            <WorkFields change={handleWorkDataChange} number={5} value={value} hidden={!value?.[5]?.title} />
-            <WorkFields change={handleWorkDataChange} number={6} value={value} hidden={!value?.[6]?.title} />
-            <WorkFields change={handleWorkDataChange} number={7} value={value} hidden={!value?.[7]?.title} />
-            <WorkFields change={handleWorkDataChange} number={8} value={value} hidden={!value?.[8]?.title} />
-            <WorkFields change={handleWorkDataChange} number={9} value={value} hidden={!value?.[9]?.title} />
-            <WorkFields change={handleWorkDataChange} number={10} value={value} hidden={!value?.[10]?.title} />
-            <WorkFields change={handleWorkDataChange} number={11} value={value} hidden={!value?.[11]?.title} />
+            <WorkFields change={handleWorkDataChange} number={2} value={value} />
+            <WorkFields change={handleWorkDataChange} number={3} value={value} />
+            <WorkFields change={handleWorkDataChange} number={4} value={value} />
+            <WorkFields change={handleWorkDataChange} number={5} value={value} />
+            <WorkFields change={handleWorkDataChange} number={6} value={value} />
+            <WorkFields change={handleWorkDataChange} number={7} value={value} />
+            <WorkFields change={handleWorkDataChange} number={8} value={value} />
+            <WorkFields change={handleWorkDataChange} number={9} value={value} />
+            <WorkFields change={handleWorkDataChange} number={10} value={value} />
+            <WorkFields change={handleWorkDataChange} number={11} value={value} />
             <button onClick={addNewWorkItem}>+</button>
           </Accordion>
         );
       case 'school':
+        console.log(value);
         return (
           <>
             <SchoolFields change={handleWorkDataChange} number={1} value={value} />
-            <SchoolFields change={handleWorkDataChange} number={2} value={value} hidden={!value?.[2]?.title} />
-            <SchoolFields change={handleWorkDataChange} number={3} value={value} hidden={!value?.[3]?.title} />
-            <SchoolFields change={handleWorkDataChange} number={4} value={value} hidden={!value?.[4]?.title} />
-            <SchoolFields change={handleWorkDataChange} number={5} value={value} hidden={!value?.[5]?.title} />
-            <SchoolFields change={handleWorkDataChange} number={6} value={value} hidden={!value?.[6]?.title} />
-            <SchoolFields change={handleWorkDataChange} number={7} value={value} hidden={!value?.[7]?.title} />
-            <SchoolFields change={handleWorkDataChange} number={8} value={value} hidden={!value?.[8]?.title} />
-            <SchoolFields change={handleWorkDataChange} number={9} value={value} hidden={!value?.[9]?.title} />
-            <SchoolFields change={handleWorkDataChange} number={10} value={value} hidden={!value?.[10]?.title} />
-            <SchoolFields change={handleWorkDataChange} number={11} value={value} hidden={!value?.[11]?.title} />
+            <SchoolFields change={handleWorkDataChange} number={2} value={value} />
+            <SchoolFields change={handleWorkDataChange} number={3} value={value} />
+            <SchoolFields change={handleWorkDataChange} number={4} value={value} />
+            <SchoolFields change={handleWorkDataChange} number={5} value={value} />
+            <SchoolFields change={handleWorkDataChange} number={6} value={value} />
+            <SchoolFields change={handleWorkDataChange} number={7} value={value} />
+            <SchoolFields change={handleWorkDataChange} number={8} value={value} />
+            <SchoolFields change={handleWorkDataChange} number={9} value={value} />
+            <SchoolFields change={handleWorkDataChange} number={10} value={value} />
+            <SchoolFields change={handleWorkDataChange} number={11} value={value} />
             <button onClick={addNewSchoolItem}>+</button>
           </>
         );
@@ -306,16 +235,16 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
         return (
           <>
             <RefFields change={handleWorkDataChange} number={1} value={value} />
-            <RefFields change={handleWorkDataChange} number={2} value={value} hidden={!value?.[2]?.title} />
-            <RefFields change={handleWorkDataChange} number={3} value={value} hidden={!value?.[3]?.title} />
-            <RefFields change={handleWorkDataChange} number={4} value={value} hidden={!value?.[4]?.title} />
-            <RefFields change={handleWorkDataChange} number={5} value={value} hidden={!value?.[5]?.title} />
-            <RefFields change={handleWorkDataChange} number={6} value={value} hidden={!value?.[6]?.title} />
-            <RefFields change={handleWorkDataChange} number={7} value={value} hidden={!value?.[7]?.title} />
-            <RefFields change={handleWorkDataChange} number={8} value={value} hidden={!value?.[8]?.title} />
-            <RefFields change={handleWorkDataChange} number={9} value={value} hidden={!value?.[9]?.title} />
-            <RefFields change={handleWorkDataChange} number={10} value={value} hidden={!value?.[10]?.title} />
-            <RefFields change={handleWorkDataChange} number={11} value={value} hidden={!value?.[11]?.title} />
+            <RefFields change={handleWorkDataChange} number={2} value={value} />
+            <RefFields change={handleWorkDataChange} number={3} value={value} />
+            <RefFields change={handleWorkDataChange} number={4} value={value} />
+            <RefFields change={handleWorkDataChange} number={5} value={value} />
+            <RefFields change={handleWorkDataChange} number={6} value={value} />
+            <RefFields change={handleWorkDataChange} number={7} value={value} />
+            <RefFields change={handleWorkDataChange} number={8} value={value} />
+            <RefFields change={handleWorkDataChange} number={9} value={value} />
+            <RefFields change={handleWorkDataChange} number={10} value={value} />
+            <RefFields change={handleWorkDataChange} number={11} value={value} />
             <button onClick={addNewRefItem}>+</button>
           </>
         );
@@ -324,29 +253,31 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
     }
   }
 
-  const handleWorkDataChange = (event) => {
+  const handleWorkDataChange = (event: ChangeEvent) => {
     const foo = event.target.getAttribute("data-foo");
 
-    const parent = event.target.parentNode.parentNode;
-    const order = parent.getAttribute('data-child-eq')
-    //console.log({value})
-    //const newValue = {...value, [order]: {[foo]: event.target.value}}
-    if (typeof value === 'undefined') {
-      value = {1: {}}
+    const eventTarget: EventTarget & Element = event.target;
+
+    if (event && event.target && event.target.parentNode && event.target.parentNode?.parentNode) {
+      const parent = event.target.parentNode.parentNode as HTMLElement;
+      const order = parent.getAttribute('data-child-eq')
+      //console.log({value})
+      //const newValue = {...value, [order]: {[foo]: event.target.value}}
+      if (typeof value === 'undefined') {
+        value = {1: {}}
+      }
+      //@ts-ignore
+      let fooke = {...value[order], [foo]: eventTarget.value}
+      //@ts-ignore
+      if (foo == 'current') {
+        //@ts-ignore
+        fooke = {...value[order], [foo]: event.target.checked}
+      }
+      //@ts-ignore
+      value = {[order]: fooke}
+      //@ts-ignore
+      setData(keyword, value)
     }
-    let fooke = {...value[order], [foo]: event.target.value}
-    if (foo == 'current') {
-      fooke = {...value[order], [foo]: event.target.checked}
-    }
-    const newValue = {[order]: fooke}
-
-    //console.log({fooke})
-
-    //const newValue = {...value, [foo]: event.target.value}
-    console.log({newValue, keyword})
-
-    value = newValue
-    setData(keyword, {["url"]: url})
   }
 
   const addNewWorkItem = () => {
@@ -355,6 +286,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
     //console.log(multibarLines, firstHiddenLine);
     firstHiddenLine.classList.remove('hidden')
     if (firstHiddenLine.getAttribute('data-child-eq') === "11") {
+      //@ts-ignore
       event.target.classList.add('hidden')
     }
   }
@@ -365,6 +297,7 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
     //console.log(multibarLines, firstHiddenLine);
     firstHiddenLine.classList.remove('hidden')
     if (firstHiddenLine.getAttribute('data-child-eq') === "11") {
+      //@ts-ignore
       event.target.classList.add('hidden')
     }
   }
@@ -375,50 +308,58 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
     //console.log(multibarLines, firstHiddenLine);
     firstHiddenLine.classList.remove('hidden')
     if (firstHiddenLine.getAttribute('data-child-eq') === "11") {
+      //@ts-ignore
       event.target.classList.add('hidden')
     }
   }
 
-  const handleSkillInfoChange = (event) => {
+  const handleSkillInfoChange = (event: ChangeEvent) => {
     const foo = event.target.getAttribute("data-foo");
     const parent = event.target.parentNode;
+    //@ts-ignore
     const order = parent.getAttribute('data-child-eq')
-    const newValue = {...value, [order]: {[foo]: event.target.value}}
-    value = newValue
+    //@ts-ignore
+    value = {...value, [order]: {[foo]: event.target.value}}
     //console.log(foo, order, newValue)
-    setData(keyword, {["url"]: url})
+    //@ts-ignore
+    setData(keyword, value)
   }
 
-  const handleContactInfoDataChange = (event) => {
+  const handleContactInfoDataChange = (event: ChangeEvent) => {
     //console.log(event.target.getAttribute("data-foo"))
     const foo = event.target.getAttribute("data-foo");
-
+//@ts-ignore
     const newValue = {...value, [foo]: event.target.value}
     //console.log(newValue)
-    setData(keyword, {["url"]: url})
+    //@ts-ignore
+    //setData(keyword, {["url"]: url})
     value = newValue
+    setData(keyword, newValue)
   }
 
-  const handleLanguageDataChange = (event) => {
+  const handleLanguageDataChange = (event:ChangeEvent) => {
     //console.log(event.target.getAttribute("data-foo"))
     const foo = event.target.getAttribute("data-foo");
 
     const parent = event.target.parentNode;
+    //@ts-ignore
     const order = parent.getAttribute('data-child-eq')
     //console.log({value})
     //const newValue = {...value, [order]: {[foo]: event.target.value}}
     if (typeof value === 'undefined') {
       value = {1: {}}
     }
+    //@ts-ignore
     const fooke = {...value[order], [foo]: event.target.value}
     const newValue = {[order]: fooke}
 
     //console.log({fooke})
 
     //const newValue = {...value, [foo]: event.target.value}
-    //console.log({newValue, keyword})
+    console.log({newValue, keyword})
     value = newValue
-    setData(keyword, {["url"]: url})
+    //@ts-ignore
+    setData(keyword, newValue)
   }
 
   /*const createNewMultibarLine = (eq) => {
@@ -431,42 +372,38 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
     );
   }*/
 
-  const addNewMultibarLine = (event) => {
+  /*const addNewMultibarLine = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const keys = Object.keys(value);
+    //@ts-ignore
+    const maxKey = Math.max(...keys);
+
+    setData(keyword, {[maxKey+1]: {["label"]: "", ["value"]: '1'}});
+  }*/
+
+  const addNewMultiItemLine = (event: React.MouseEvent<HTMLButtonElement>) => {
     //setLanguageLines([...languageLines, createNewMultibarLine(languageLineCount + 1)])
     //setLanguageLineCount(languageLineCount + 1)
 
-    const multibarLines = document.querySelectorAll(`.multibar-line.hidden.multibar-${keyword}`)
+    /*const multibarLines = document.querySelectorAll(`.multi-item.hidden.multiitem-${keyword}`)
     const firstHiddenLine = multibarLines[0]
     //console.log(multibarLines, firstHiddenLine);
     firstHiddenLine.classList.remove('hidden')
     if (firstHiddenLine.getAttribute('data-child-eq') === "11") {
+      //@ts-ignore
       event.target.classList.add('hidden')
-    }
+    }*/
   }
 
-  const addNewMultiItemLine = (event) => {
-    //setLanguageLines([...languageLines, createNewMultibarLine(languageLineCount + 1)])
-    //setLanguageLineCount(languageLineCount + 1)
+  const handleInputChange = (event: ChangeEvent) => {
+    const foo = event.target.getAttribute("data-foo");
 
-    const multibarLines = document.querySelectorAll(`.multi-item.hidden.multiitem-${keyword}`)
-    const firstHiddenLine = multibarLines[0]
-    //console.log(multibarLines, firstHiddenLine);
-    firstHiddenLine.classList.remove('hidden')
-    if (firstHiddenLine.getAttribute('data-child-eq') === "11") {
-      event.target.classList.add('hidden')
-    }
-  }
-
-  useEffect(() => {
-    //if (type === 'multi-bar' && languageLines.length === 0) {
-      //setLanguageLines([...languageLines, createNewMultibarLine(languageLineCount)])
-    //}
-  }, [])
-
-  const handleInputChange = (event) => {
+    const parent = event.target.parentNode;
+    //@ts-ignore
     const targetValue = event.target.value;
     //console.log(targetValue)
-    setData(keyword, {["url"]: url})
+    console.log(foo, parent, targetValue);
+    //@ts-ignore
+    setData(keyword, targetValue)
     value = targetValue
   }
 
@@ -476,8 +413,6 @@ const AccordionItemComponent = ({type, title, value, keyword, setData}: Accordio
         <AccordionButton className="flex justify-between">
       <span
         className="text-left font-bold text-navy-900 dark:text-white"
-        flex="1"
-        textAlign="left"
       >
         {title}
       </span>

@@ -2,7 +2,9 @@ import React from 'react';
 
 import './style.css';
 import {redirect} from "next/navigation";
+import CopyCvButton from "@/component/CopyCvButton/CopyCvButton";
 
+{/*@ts-ignore*/}
 const CvView = ({cvdata, componentRef, isMiniature, id}) => {
   const handleCvPick = () => {
     redirect('/'+id)
@@ -13,9 +15,11 @@ const CvView = ({cvdata, componentRef, isMiniature, id}) => {
       style={isMiniature ? {} : {minHeight: '4000px'}}
       ref={componentRef}>
       {isMiniature && <a href={`resumes/${id}`} className={'cv-hover'} onClick={handleCvPick}></a>}
+      {/*@ts-ignore*/}
+      {isMiniature && <CopyCvButton id={id} />}
       <div className="left">
-        <div className="name">{cvdata.name}</div>
-        <div className="title">{cvdata.title}</div>
+        <div className="name">{cvdata?.name}</div>
+        <div className="title">{cvdata?.title}</div>
         <div className="image">
           <img src={cvdata?.image?.url} alt=""/>
         </div>
@@ -25,14 +29,14 @@ const CvView = ({cvdata, componentRef, isMiniature, id}) => {
             return (
               <div key={e}>
                 <div>{e}</div>
-                <div>{cvdata.contact[e]}</div>
+                <div>{cvdata?.contact[e]}</div>
               </div>
             )
           })}
         </div>
         <div className="language">
           <h2>Languages</h2>
-          {(cvdata && cvdata.languages) && Object.keys(cvdata.languages).map((e,i) => {
+          {(cvdata && cvdata?.languages) && Object.keys(cvdata?.languages).map((e,i) => {
             return (
               <div key={e} className={"language__line-wrapper"}>
                 <div className={"language__title"}>{cvdata.languages[e]?.label}</div>
@@ -70,10 +74,10 @@ const CvView = ({cvdata, componentRef, isMiniature, id}) => {
         </div>
       </div>
       <div className="right">
-        <div className="desc">{cvdata.description}</div>
+        <div className="desc">{cvdata?.description}</div>
         <div className="work right-side-list">
           <h2>Work History</h2>
-          {cvdata.work && Object.keys(cvdata.work).map((e, i) => {
+          {cvdata && cvdata.work && Object.keys(cvdata.work).map((e, i) => {
             return (
               <div className={"flex gap-4 work-data"} key={`${cvdata.work[e]['company']}_${cvdata.work[e]['title']}`} style={{marginTop: `${cvdata.work[e]['margin']}px`}}>
                 <div className="dates w-20">{cvdata.work[e]['from-year']}-{cvdata.work[e]['from-month']?.length === 1 ? `0${cvdata.work[e]['from-month']}` : cvdata.work[e]['from-month']} - {cvdata.work[e]['current'] ? 'Current' : `${cvdata.work[e]['to-year']}-${cvdata.work[e]['to-month']?.length === 1 ? `0${cvdata.work[e]['to-month']}` : cvdata.work[e]['to-month']}`}</div>
@@ -99,7 +103,7 @@ const CvView = ({cvdata, componentRef, isMiniature, id}) => {
         </div>
         <div className="ed right-side-list">
           <h2>Education</h2>
-          {cvdata.school && Object.keys(cvdata.school).map((e, i) => {
+          {cvdata && cvdata.school && Object.keys(cvdata.school).map((e, i) => {
             return (
               <div className={"flex gap-4 work-data"} key={`${cvdata.school[e]['school']}_${cvdata.school[e]['title']}`}>
                 <div className="dates w-20">{cvdata.school[e]['from-year']}-{cvdata.school[e]?.['from-month']?.length === 1 ? `0${cvdata.school[e]['from-month']}` : cvdata.school[e]['from-month']} - {cvdata.school[e]['current'] ? 'Current' : `${cvdata.school[e]['to-year']}-${cvdata.school[e]?.['to-month']?.length === 1 ? `0${cvdata.school[e]['to-month']}` : cvdata.school[e]['to-month']}`}</div>
@@ -113,7 +117,7 @@ const CvView = ({cvdata, componentRef, isMiniature, id}) => {
         </div>
         <div className="ref-wrapper right-side-list">
           <h2>References</h2>
-          {cvdata.ref && Object.keys(cvdata.ref).map((e, i) => {
+          {cvdata && cvdata.ref && Object.keys(cvdata.ref).map((e, i) => {
             return (
               <div className={"flex gap-4 ref-data"} key={cvdata.ref[e]['title']}>
                 <div className="ref">

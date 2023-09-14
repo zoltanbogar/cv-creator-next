@@ -22,7 +22,8 @@ export const Flash = () => {
   }, []);
 
   useEffect(() => {
-    if(document.querySelector('.close') !== null) {
+    if (document !== null && document.querySelector('.close') !== null) {
+      {/*@ts-ignore*/}
       document.
       querySelector('.close').
       addEventListener('click', () => setVisibility(false));

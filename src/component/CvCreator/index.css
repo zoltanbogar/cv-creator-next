@@ -41,6 +41,10 @@ section {
     font-size: 1.25rem;
 }
 
+.contact {
+    word-break: break-word;
+}
+
 .contact > div > div:nth-child(1) {
     font-weight: 700;
     text-transform: capitalize;
@@ -145,7 +149,7 @@ section {
 }
 
 .ref-wrapper {
-    page-break-before: always;
+    /*page-break-before: always;*/
     page-break-after: always;
 }
 

@@ -53,3 +53,17 @@ export type work = {
 export type image = {
   url: string
 }
+
+export type TData = {
+  name: string,
+  title: string,
+  image: image,
+  description: string,
+  contact: contact,
+  languages: language[],
+  hard: hard[],
+  soft: soft[],
+  ref: reference[],
+  school: school[],
+  work: work[],
+}
